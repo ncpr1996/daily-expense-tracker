@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Smart Daily Expense Tracker for Indian Users">
+    <meta name="theme-color" content="#6366f1">
+    <title>Daily Expense Tracker - Smart Budget Management</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Top Header -->
+    <header class="top-header">
+        <div class="header-left">
+            <h1>💰 Expense Tracker</h1>
+        </div>
+        <div class="header-center">
+            <div class="budget-summary">
+                <div class="budget-item">
+                    <span class="budget-label">Monthly Budget</span>
+                    <span class="budget-value" id="headerBudget">₹0</span>
+                </div>
+                <div class="budget-item">
+                    <span class="budget-label">Spent</span>
+                    <span class="budget-value spent" id="headerSpent">₹0</span>
+                </div>
+                <div class="budget-item">
+                    <span class="budget-label">Remaining</span>
+                    <span class="budget-value remaining" id="headerRemaining">₹0</span>
+                </div>
+            </div>
+        </div>
+        <div class="header-right">
+            <button id="darkModeToggle" class="icon-btn" aria-label="Toggle dark mode">🌙</button>
+            <button id="menuBtn" class="icon-btn" aria-label="Menu">☰</button>
+        </div>
+    </header>
+
+    <div class="app-layout">
+        <!-- Left Sidebar - Fixed -->
+        <aside class="sidebar">
+            <div class="sidebar-content">
+                <!-- Greeting Section -->
+                <div class="greeting-section">
+                    <h2 class="greeting">Good Day! 👋</h2>
+                </div>
+                
+                <!-- Budget Overview -->
+                <section class="budget-overview-card glass-card">
+                    <div class="card-header">
+                        <h3>Budget Overview</h3>
+                        <button id="setBudgetBtn" class="edit-btn" title="Edit Budget">✏️</button>
+                    </div>
+                    <div class="budget-amount" id="budgetAmount">₹0</div>
+                    <div class="progress-bar">
+                        <div id="budgetProgressBar" class="progress-fill"></div>
+                    </div>
+                    <div class="budget-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">Spent</span>
+                            <span class="stat-value" id="totalSpent">₹0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Left</span>
+                            <span class="stat-value" id="budgetLeft">₹0</span>
+                        </div>
+                    </div>
+                    <div class="salary-countdown" id="salaryCountdown"></div>
+                </section>
+
+                <!-- Quick Add Expense -->
+                <section class="quick-add-card glass-card">
+                    <div class="card-header">
+                        <h3>Add Expense</h3>
+                    </div>
+                    
+                    <div class="amount-input-group">
+                        <span class="currency">₹</span>
+                        <input type="number" id="expenseAmount" placeholder="0" inputmode="decimal" aria-label="Expense amount">
+                    </div>
+                    
+                    <div class="categories-grid">
+                        <button class="category-btn" data-category="Food" title="Food">🍔<span>Food</span></button>
+                        <button class="category-btn" data-category="Transport" title="Transport">🚗<span>Transport</span></button>
+                        <button class="category-btn" data-category="Bills" title="Bills">⚡<span>Bills</span></button>
+                        <button class="category-btn" data-category="Shopping" title="Shopping">🛒<span>Shopping</span></button>
+                        <button class="category-btn" data-category="Entertainment" title="Entertainment">🎬<span>Entertainment</span></button>
+                        <button class="category-btn" data-category="Health" title="Health">💊<span>Health</span></button>
+                        <button class="category-btn" data-category="Education" title="Education">📚<span>Education</span></button>
+                        <button class="category-btn" data-category="Other" title="Other">📦<span>Other</span></button>
+                    </div>
+
+                    <div class="optional-fields">
+                        <input type="text" id="expenseNotes" placeholder="Add notes (optional)" aria-label="Expense notes">
+                        <input type="date" id="expenseDate" aria-label="Expense date">
+                    </div>
+
+                    <button id="addExpenseBtn" class="primary-btn" disabled>Add Expense</button>
+                    
+                    <div id="recentSuggestions" class="suggestions"></div>
+                </section>
+
+
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Navigation Tabs -->
+            <nav class="nav-tabs">
+                <button class="nav-tab active" data-tab="dashboard">📊 Dashboard</button>
+                <button class="nav-tab" data-tab="expenses">📝 Expenses</button>
+                <button class="nav-tab" data-tab="savings">💰 Saving Plan</button>
+                <button class="nav-tab" data-tab="reminders">🔔 Reminders</button>
+            </nav>
+
+            <!-- Dashboard Tab -->
+            <div id="dashboardTab" class="tab-pane active">
+                <div class="dashboard-grid">
+                    <!-- Expense Breakdown Pie Chart -->
+                    <div class="chart-card glass-card large-chart">
+                        <div class="card-header">
+                            <div>
+                                <h3>💰 Expense Breakdown</h3>
+                                <span class="card-subtitle">Visual overview of your spending</span>
+                            </div>
+                            <select id="chartMonthFilter" class="month-filter">
+                                <!-- Populated dynamically -->
+                            </select>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="mainPieChart"></canvas>
+                        </div>
+                        <div id="expenseSummary" class="expense-summary"></div>
+                    </div>
+
+                    <!-- Recent Expenses Preview -->
+                    <div class="recent-expenses-card glass-card full-width">
+                        <div class="card-header">
+                            <h3>Recent Expenses</h3>
+                            <button class="view-all-btn" onclick="switchTab('expenses')">View All →</button>
+                        </div>
+                        <div id="recentExpensesPreview"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Expenses Tab -->
+            <div id="expensesTab" class="tab-pane">
+                <div class="expenses-container glass-card">
+                    <div class="card-header">
+                        <h3>All Expenses</h3>
+                        <div class="filter-controls">
+                            <select id="filterPeriod" aria-label="Filter period">
+                                <option value="today">Today</option>
+                                <option value="week">This Week</option>
+                                <option value="month" selected>This Month</option>
+                                <option value="custom">Custom Range</option>
+                            </select>
+                            <div id="customDateRange" class="custom-date-range" style="display: none;">
+                                <input type="date" id="startDate" aria-label="Start date">
+                                <span>to</span>
+                                <input type="date" id="endDate" aria-label="End date">
+                                <button id="applyDateRange" class="apply-btn">Apply</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table class="expenses-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Category</th>
+                                    <th>Description</th>
+                                    <th>Amount</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="expensesTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Saving Plan Tab -->
+            <div id="savingsTab" class="tab-pane">
+                <div class="what-if-calculator glass-card">
+                    <div class="card-header">
+                        <h3>🎯 Daily Savings Goal</h3>
+                    </div>
+                    <div class="calculator-content">
+                        <p style="margin-bottom: 1.5rem; color: var(--text-secondary);">
+                            See how much you can save by setting aside a fixed amount every day.
+                        </p>
+                        <div class="input-with-currency">
+                            <span class="currency-symbol">₹</span>
+                            <input type="number" id="dailySavings" placeholder="Enter daily savings amount">
+                        </div>
+                        <div id="whatIfResult" class="what-if-result"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reminders Tab -->
+            <div id="remindersTab" class="tab-pane">
+                <div class="reminders-container glass-card">
+                    <div class="card-header">
+                        <h3>📅 Bill Reminders</h3>
+                        <button id="addReminderBtn" class="secondary-btn">+ Add Reminder</button>
+                    </div>
+                    <div id="remindersList" class="reminders-list"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Menu Modal -->
+    <div id="menuModal" class="modal">
+        <div class="modal-content glass-card">
+            <button class="close-btn">&times;</button>
+            <h2>Menu</h2>
+            
+            <!-- Profile Section -->
+            <div class="menu-section">
+                <h3 class="menu-section-title">👤 Profile</h3>
+                <div class="profile-form">
+                    <div class="form-group">
+                        <label for="userName">Name</label>
+                        <input type="text" id="userName" placeholder="Enter your name" maxlength="50">
+                    </div>
+                    <div class="form-group">
+                        <label for="userAge">Age</label>
+                        <input type="number" id="userAge" placeholder="Enter your age" min="1" max="120">
+                    </div>
+                    <div class="form-group">
+                        <label for="userOccupation">Occupation</label>
+                        <input type="text" id="userOccupation" placeholder="e.g., Student, Professional" maxlength="50">
+                    </div>
+                    <div class="form-group">
+                        <label for="userCity">City</label>
+                        <input type="text" id="userCity" placeholder="Enter your city" maxlength="50">
+                    </div>
+                    <button id="saveProfile" class="menu-item primary">💾 Save Profile</button>
+                </div>
+            </div>
+            
+            <!-- Settings Section -->
+            <div class="menu-section">
+                <h3 class="menu-section-title">⚙️ Settings</h3>
+                <div class="menu-items">
+                    <button id="clearData" class="menu-item danger">🗑️ Clear All Data</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confetti Container -->
+    <div id="confetti" class="confetti-container"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
