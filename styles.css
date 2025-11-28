@@ -1401,6 +1401,28 @@ body::before {
     }
 }
 
+/* Footer */
+.app-footer {
+    background: var(--card-bg);
+    border-top: 1px solid var(--border-color);
+    padding: 1.5rem 2rem;
+    text-align: center;
+    margin-top: 2rem;
+    position: relative;
+    z-index: 10;
+}
+
+.app-footer p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.app-footer strong {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
 /* Responsive Design */
 @media (max-width: 1200px) {
     .dashboard-grid,
