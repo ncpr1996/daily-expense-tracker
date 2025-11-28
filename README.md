@@ -96,5 +96,3 @@ All data is stored locally on your device. No data is sent to any server. You ha
 Free to use for personal and commercial projects.
 
 ---
-
-Made with ❤️ for Indian users
