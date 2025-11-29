@@ -585,16 +585,16 @@ function createCSSBarChart(container, categoryTotals, total) {
     const gradientString = gradientStops.join(', ');
     
     let html = `
-        <div style="display: flex; flex-direction: column; align-items: center; padding: 0.5rem; gap: 1rem; width: 100%; box-sizing: border-box;">
-            <div style="position: relative; width: min(280px, calc(100vw - 4rem)); height: min(280px, calc(100vw - 4rem)); max-width: 320px; max-height: 320px;">
-                <div style="width: 100%; height: 100%; border-radius: 50%; background: conic-gradient(${gradientString}); box-shadow: 0 8px 16px rgba(0,0,0,0.15); position: relative;">
-                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 40%; height: 40%; min-width: 100px; min-height: 100px; border-radius: 50%; background: var(--card-bg); box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0.5rem; box-sizing: border-box;">
-                        <div style="font-size: clamp(0.9rem, 3.5vw, 1.3rem); font-weight: 700; color: var(--text-primary); text-align: center; word-break: break-word;">₹${total.toLocaleString('en-IN')}</div>
-                        <div style="font-size: clamp(0.65rem, 2vw, 0.8rem); color: var(--text-secondary); margin-top: 0.25rem;">Total</div>
+        <div style="display: flex; flex-direction: column; align-items: center; padding: 0; gap: 1rem; width: 100%; max-width: 100%; box-sizing: border-box; overflow: hidden;">
+            <div style="position: relative; width: min(260px, calc(100vw - 6rem)); height: min(260px, calc(100vw - 6rem)); max-width: 280px; max-height: 280px; margin: 0 auto;">
+                <div style="width: 100%; height: 100%; border-radius: 50%; background: conic-gradient(${gradientString}); box-shadow: 0 6px 12px rgba(0,0,0,0.12); position: relative;">
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 42%; height: 42%; min-width: 90px; min-height: 90px; border-radius: 50%; background: var(--card-bg); box-shadow: 0 3px 8px rgba(0,0,0,0.1); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0.5rem; box-sizing: border-box;">
+                        <div style="font-size: clamp(0.85rem, 3.2vw, 1.2rem); font-weight: 700; color: var(--text-primary); text-align: center; word-break: break-word; line-height: 1.2;">₹${total.toLocaleString('en-IN')}</div>
+                        <div style="font-size: clamp(0.6rem, 1.8vw, 0.75rem); color: var(--text-secondary); margin-top: 0.2rem;">Total</div>
                     </div>
                 </div>
             </div>
-            <div style="width: 100%; display: flex; flex-direction: column; gap: 0.75rem; padding: 0 0.25rem; box-sizing: border-box;">
+            <div style="width: 100%; display: flex; flex-direction: column; gap: 0.65rem; padding: 0; box-sizing: border-box;">
     `;
     
     sortedCategories.forEach(([category, amount], index) => {
@@ -602,15 +602,15 @@ function createCSSBarChart(container, categoryTotals, total) {
         const color = colors[index % colors.length];
         
         html += `
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.875rem; background: var(--card-bg); border-radius: 10px; border-left: 4px solid ${color}; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s; width: 100%; box-sizing: border-box; min-width: 0;">
-                <div style="display: flex; align-items: center; gap: 0.625rem; min-width: 0; flex: 1;">
-                    <span style="font-size: clamp(1.2rem, 4vw, 1.5rem); flex-shrink: 0;">${getCategoryEmoji(category)}</span>
-                    <div style="min-width: 0; flex: 1;">
-                        <div style="font-weight: 600; font-size: clamp(0.85rem, 2.5vw, 0.95rem); color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${category}</div>
-                        <div style="font-size: clamp(0.75rem, 2vw, 0.85rem); color: var(--text-secondary);">${percentage}%</div>
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 0.65rem; background: var(--card-bg); border-radius: 8px; border-left: 3px solid ${color}; box-shadow: 0 2px 6px rgba(0,0,0,0.06); width: 100%; box-sizing: border-box; min-width: 0; max-width: 100%;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; min-width: 0; flex: 1; overflow: hidden;">
+                    <span style="font-size: clamp(1.1rem, 3.5vw, 1.4rem); flex-shrink: 0;">${getCategoryEmoji(category)}</span>
+                    <div style="min-width: 0; flex: 1; overflow: hidden;">
+                        <div style="font-weight: 600; font-size: clamp(0.8rem, 2.3vw, 0.9rem); color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${category}</div>
+                        <div style="font-size: clamp(0.7rem, 1.9vw, 0.8rem); color: var(--text-secondary);">${percentage}%</div>
                     </div>
                 </div>
-                <div style="font-weight: 700; color: ${color}; font-size: clamp(0.95rem, 3vw, 1.1rem); white-space: nowrap; margin-left: 0.5rem;">₹${amount.toLocaleString('en-IN')}</div>
+                <div style="font-weight: 700; color: ${color}; font-size: clamp(0.9rem, 2.8vw, 1.05rem); white-space: nowrap; margin-left: 0.4rem; flex-shrink: 0;">₹${amount.toLocaleString('en-IN')}</div>
             </div>
         `;
     });
