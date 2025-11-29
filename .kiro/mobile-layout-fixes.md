@@ -269,3 +269,201 @@ Background:    z-index: 0
 - No confusion
 - Professional mobile layout
 - Matches desktop quality
+
+
+---
+
+## Round 3: Pie Chart Overflow on Mobile
+
+### Problem
+- Pie chart exceeding screen boundaries on mobile
+- Category cards overflowing horizontally
+- Content not fully visible
+- Horizontal scrolling required
+
+### Root Cause
+- Chart size using `90vw` without accounting for padding
+- Cards using fixed widths that don't fit mobile screens
+- No overflow protection on containers
+- Grid layout causing overflow
+
+### Solution Applied
+
+#### 1. Pie Chart Size Fix
+```javascript
+// Before
+width: min(320px, 90vw)
+
+// After
+width: min(280px, calc(100vw - 4rem))
+max-width: 320px
+```
+
+**Changes:**
+- Reduced base size from 320px to 280px
+- Used `calc(100vw - 4rem)` to account for padding
+- Added max-width constraint
+- Smaller shadow for mobile
+
+#### 2. Center Circle Responsive
+```javascript
+// Before
+width: min(140px, 40%)
+
+// After
+width: 40%
+min-width: 100px
+```
+
+**Improvements:**
+- Proportional sizing
+- Minimum size guarantee
+- Better text wrapping
+- Responsive font sizes with clamp()
+
+#### 3. Category Cards Layout
+```javascript
+// Before
+grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr))
+
+// After
+display: flex
+flex-direction: column
+width: 100%
+```
+
+**Changes:**
+- Changed from grid to flex column
+- Full width cards
+- No horizontal overflow
+- Consistent spacing
+
+#### 4. Card Content Optimization
+```css
+.category-card {
+    width: 100%;
+    box-sizing: border-box;
+    min-width: 0;              /* Allow shrinking */
+    padding: 0.875rem;         /* Reduced padding */
+}
+
+.category-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;   /* Truncate long names */
+}
+
+.amount {
+    white-space: nowrap;       /* Prevent wrapping */
+    margin-left: 0.5rem;       /* Spacing */
+}
+```
+
+#### 5. Container Overflow Protection
+```css
+.chart-container {
+    overflow-x: hidden;        /* Prevent horizontal scroll */
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.chart-card {
+    overflow: hidden;          /* Clip overflowing content */
+}
+```
+
+#### 6. Responsive Font Sizes
+```javascript
+// Emoji
+font-size: clamp(1.2rem, 4vw, 1.5rem)
+
+// Category name
+font-size: clamp(0.85rem, 2.5vw, 0.95rem)
+
+// Percentage
+font-size: clamp(0.75rem, 2vw, 0.85rem)
+
+// Amount
+font-size: clamp(0.95rem, 3vw, 1.1rem)
+
+// Total in center
+font-size: clamp(0.9rem, 3.5vw, 1.3rem)
+```
+
+### Mobile Spacing Adjustments
+
+**Chart Container:**
+- Desktop: `padding: 2rem`
+- Tablet (968px): `padding: 0.5rem`
+- Mobile (640px): `padding: 0.5rem`
+
+**Chart Wrapper:**
+- Desktop: `padding: 1rem`
+- Mobile: `padding: 0.5rem`
+
+**Category Cards:**
+- Desktop: `padding: 1rem`
+- Mobile: `padding: 0.875rem`
+
+### Visual Improvements
+
+**Before:**
+- Chart overflowing screen
+- Cards extending beyond viewport
+- Horizontal scroll required
+- Poor mobile experience
+
+**After:**
+- ✅ Chart fits perfectly within screen
+- ✅ All cards visible without scrolling
+- ✅ No horizontal overflow
+- ✅ Responsive text sizes
+- ✅ Professional mobile layout
+- ✅ Touch-friendly spacing
+
+### Technical Details
+
+**Calculation Logic:**
+```javascript
+// Chart size calculation
+width: min(280px, calc(100vw - 4rem))
+// 100vw = full viewport width
+// - 4rem = subtract padding (2rem left + 2rem right)
+// min() = use smaller value
+// Result: Chart never exceeds available space
+```
+
+**Box Model:**
+```css
+box-sizing: border-box;
+/* Includes padding and border in width calculation */
+/* Prevents overflow from padding */
+```
+
+**Flexbox Layout:**
+```css
+display: flex;
+flex-direction: column;
+/* Stacks cards vertically */
+/* No horizontal overflow possible */
+```
+
+## Result
+
+✅ **Pie Chart:**
+- Fits perfectly on all mobile screens
+- Responsive sizing
+- No overflow
+- Clear visibility
+
+✅ **Category Cards:**
+- Full width on mobile
+- Stacked vertically
+- No horizontal scroll
+- All content visible
+
+✅ **Overall:**
+- Professional mobile layout
+- Smooth user experience
+- No layout issues
+- Works on all screen sizes (320px+)

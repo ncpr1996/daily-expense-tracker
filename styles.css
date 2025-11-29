@@ -622,10 +622,12 @@ body::before {
 
 .chart-card {
     min-height: 350px;
+    overflow: hidden;
 }
 
 .chart-card.large-chart {
     min-height: 500px;
+    overflow: hidden;
 }
 
 .chart-container {
@@ -634,6 +636,9 @@ body::before {
     align-items: center;
     padding: 2rem;
     min-height: 400px;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 /* Pie chart legend hover effect */
@@ -1535,8 +1540,9 @@ body::before {
     }
     
     .chart-container {
-        padding: 1rem;
+        padding: 0.5rem;
         min-height: 300px;
+        overflow-x: hidden;
     }
     
     .glass-card {
@@ -1662,7 +1668,8 @@ body::before {
     }
     
     .chart-container {
-        padding: 0.75rem;
+        padding: 0.5rem;
+        overflow-x: hidden;
     }
     
     .app-footer {
