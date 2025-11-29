@@ -1228,8 +1228,9 @@ body::before {
     z-index: 2000;
     align-items: center;
     justify-content: center;
-    overflow-y: auto;
     padding: 1rem;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .modal.active {
@@ -1241,6 +1242,7 @@ body::before {
     width: 90%;
     max-height: 85vh;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     position: relative;
     animation: slideUp 0.3s;
     margin: auto;
@@ -1652,19 +1654,22 @@ body::before {
         padding: 0.4rem 0.6rem;
     }
     
-    .modal-content {
-        width: 95%;
-        max-width: 95%;
-        max-height: 90vh;
-        padding: 1.5rem;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-    
     .modal {
         padding: 0.5rem;
         align-items: flex-start;
         padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+    
+    .modal-content {
+        width: 95%;
+        max-width: 95%;
+        max-height: none;
+        padding: 1.5rem;
+        overflow-y: visible;
+        -webkit-overflow-scrolling: touch;
+        margin-top: 0;
+        margin-bottom: 0;
     }
     
     .nav-tabs {
