@@ -88,12 +88,24 @@ function setupEventListeners() {
     document.getElementById('darkModeToggle').addEventListener('click', toggleDarkMode);
     
     // Menu
+    const menuModal = document.getElementById('menuModal');
+    
     document.getElementById('menuBtn').addEventListener('click', () => {
-        document.getElementById('menuModal').classList.add('active');
+        menuModal.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
     });
     
     document.querySelector('.close-btn').addEventListener('click', () => {
-        document.getElementById('menuModal').classList.remove('active');
+        menuModal.classList.remove('active');
+        document.body.style.overflow = ''; // Restore scrolling
+    });
+    
+    // Close modal when clicking outside
+    menuModal.addEventListener('click', (e) => {
+        if (e.target === menuModal) {
+            menuModal.classList.remove('active');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
     });
     
     // Budget edit
@@ -1547,6 +1559,7 @@ function saveProfile() {
         btn.textContent = originalText;
         btn.style.background = '';
         document.getElementById('menuModal').classList.remove('active');
+        document.body.style.overflow = ''; // Restore scrolling
     }, 1500);
 }
 
