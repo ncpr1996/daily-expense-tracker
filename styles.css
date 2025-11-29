@@ -1629,16 +1629,77 @@ body::before {
     }
     
     .expenses-table {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
         display: block;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
     }
     
-    .expenses-table th,
+    .expenses-table thead,
+    .expenses-table tbody,
+    .expenses-table tr {
+        display: block;
+        width: 100%;
+    }
+    
+    .expenses-table thead {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: var(--card-bg);
+    }
+    
+    .expenses-table th {
+        padding: 0.5rem 0.4rem;
+        font-size: 0.65rem;
+        text-align: center;
+        white-space: nowrap;
+        display: inline-block;
+        vertical-align: middle;
+    }
+    
+    .expenses-table th:nth-child(1) { width: 15%; } /* Date */
+    .expenses-table th:nth-child(2) { width: 22%; } /* Category */
+    .expenses-table th:nth-child(3) { width: 25%; } /* Description */
+    .expenses-table th:nth-child(4) { width: 18%; } /* Amount */
+    .expenses-table th:nth-child(5) { width: 20%; } /* Actions */
+    
     .expenses-table td {
-        padding: 0.5rem 0.25rem;
+        padding: 0.6rem 0.4rem;
+        font-size: 0.7rem;
+        text-align: center;
+        display: inline-block;
+        vertical-align: middle;
+        word-wrap: break-word;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    .expenses-table td:nth-child(1) { width: 15%; } /* Date */
+    .expenses-table td:nth-child(2) { width: 22%; } /* Category */
+    .expenses-table td:nth-child(3) { width: 25%; } /* Description */
+    .expenses-table td:nth-child(4) { width: 18%; } /* Amount */
+    .expenses-table td:nth-child(5) { width: 20%; } /* Actions */
+    
+    .category-cell {
+        flex-direction: column;
+        gap: 0.2rem;
+        font-size: 0.65rem;
+    }
+    
+    .category-emoji {
+        font-size: 1.2rem;
+    }
+    
+    .amount-cell {
         font-size: 0.75rem;
+        font-weight: 700;
+    }
+    
+    .delete-btn {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.65rem;
+        white-space: nowrap;
     }
     
     .card-header h3 {
