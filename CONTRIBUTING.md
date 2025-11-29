@@ -27,12 +27,13 @@ daily-expense-tracker/
 ├── app.js             # JavaScript - application logic
 ├── manifest.json      # PWA config - app metadata
 ├── README.md          # User documentation
+├── CONTRIBUTING.md    # This file
 ├── .gitignore         # Git ignore rules
 └── .kiro/             # Developer documentation
     ├── requirements.md      # Feature requirements
     ├── architecture.md      # Technical architecture
     ├── user-guide.md        # End-user guide
-    └── CONTRIBUTING.md      # This file
+    └── prompts.md           # Development prompts
 ```
 
 ## Code Style Guidelines
@@ -298,10 +299,10 @@ Avoid:
 ## Questions?
 
 If you have questions about contributing:
-1. Check existing documentation
+1. Check existing documentation in `.kiro/` folder
 2. Review similar code in the project
 3. Test your changes thoroughly
-4. Ask for clarification if needed
+4. Open an issue for clarification
 
 ## License
 

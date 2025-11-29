@@ -263,9 +263,116 @@ Create comprehensive documentation in a .kiro/ folder:
 1. requirements.md - Feature requirements, user stories, data structures
 2. architecture.md - Technical architecture, design patterns, code organization
 3. user-guide.md - Complete end-user guide with step-by-step instructions
-4. CONTRIBUTING.md - Developer guide for contributing and code standards
+4. prompts.md - All development prompts used to build the application
+
+Also create CONTRIBUTING.md in the root directory for easy visibility.
 
 Each document should be detailed, well-structured, and helpful for both users and developers.
+```
+
+### Prompt 7.4: Add Creator Footer
+```
+Add a professional footer to the application:
+
+1. Add footer at the bottom of the page with copyright notice
+2. Include creator name: "N Chandra Prakash Reddy"
+3. Use format: "© 2025 N Chandra Prakash Reddy. All rights reserved."
+4. Style it to match the app design:
+   - Center aligned
+   - Subtle border at top
+   - Creator name highlighted in primary color
+   - Works in both light and dark modes
+   - Responsive on all screen sizes
+
+The footer should be professional and clearly show ownership.
+```
+
+---
+
+## Phase 8: Mobile Responsiveness
+
+### Prompt 8.1: Fix Mobile Layout Issues
+```
+The application works great on desktop but has layout issues on mobile devices. Fix the responsive design:
+
+**Layout Problems to Fix:**
+1. Sidebar causing horizontal scroll on mobile
+2. Pie chart overflowing on small screens
+3. Tables not fitting in viewport
+4. Text too small or too large on mobile
+5. Buttons too small for touch targets
+6. Forms difficult to use on mobile
+
+**Required Fixes:**
+
+1. **Layout Structure (768px and below):**
+   - Make sidebar full-width and stack on top
+   - Remove fixed positioning on mobile
+   - Main content takes full width
+   - Add overflow-x: hidden to prevent horizontal scroll
+
+2. **Pie Chart Responsiveness:**
+   - Chart size: use min(320px, 90vw) for adaptive sizing
+   - Center circle: use min(140px, 40%) for proportional sizing
+   - Font sizes: use clamp() for fluid typography
+   - Legend grid: use minmax(min(250px, 100%), 1fr) to prevent overflow
+
+3. **Navigation:**
+   - Enable horizontal scroll for tabs
+   - Add touch-friendly scrolling
+   - Reduce font sizes (0.75rem on mobile)
+   - Add min-width: fit-content to prevent wrapping
+
+4. **Forms & Inputs:**
+   - Reduce input padding to 0.6rem
+   - Font size: 0.9rem for readability
+   - Modal: 95% width on mobile
+   - Month filter: smaller font (0.8rem)
+
+5. **Tables:**
+   - Enable horizontal scroll
+   - Smaller font sizes (0.75rem)
+   - Reduced padding (0.5rem 0.25rem)
+   - Touch-friendly scrolling
+
+6. **Typography Scale:**
+   - Header title: 1rem (down from 1.5rem)
+   - Greeting: 1.1rem (down from 1.3rem)
+   - Budget amount: 1.8rem (down from 2.5rem)
+   - Card headers: 1rem (down from 1.1rem)
+
+7. **Category Buttons:**
+   - 4 columns on mobile (down from 8)
+   - Smaller padding and fonts
+   - Better touch targets (min 44x44px)
+
+8. **Spacing:**
+   - Card padding: 1rem (down from 1.5rem)
+   - Reduced gaps throughout
+   - Compact layout for mobile
+
+**Breakpoints:**
+- 1200px: Grid adjustments
+- 968px: Sidebar stacking, major layout changes
+- 640px: Compact mobile layout
+
+**CSS Techniques to Use:**
+- Fluid sizing: min(), max(), clamp()
+- Viewport units: vw, vh
+- Flexible grids: auto-fit, minmax()
+- Touch scrolling: -webkit-overflow-scrolling: touch
+- Overflow control: overflow-x: hidden
+
+**Testing:**
+Test on these screen sizes:
+- 375px (iPhone SE)
+- 390px (iPhone 12/13)
+- 430px (iPhone 14 Pro Max)
+- 360px (Samsung Galaxy)
+- 768px (iPad Mini)
+- 820px (iPad)
+
+Ensure no horizontal scrolling, all text is readable, and all buttons are touch-friendly.
 ```
 
 ---

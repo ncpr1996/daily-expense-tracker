@@ -585,16 +585,16 @@ function createCSSBarChart(container, categoryTotals, total) {
     const gradientString = gradientStops.join(', ');
     
     let html = `
-        <div style="display: flex; flex-direction: column; align-items: center; padding: 2rem; gap: 2rem;">
-            <div style="position: relative; width: 320px; height: 320px;">
+        <div style="display: flex; flex-direction: column; align-items: center; padding: 1rem; gap: 1.5rem;">
+            <div style="position: relative; width: min(320px, 90vw); height: min(320px, 90vw);">
                 <div style="width: 100%; height: 100%; border-radius: 50%; background: conic-gradient(${gradientString}); box-shadow: 0 12px 24px rgba(0,0,0,0.2), 0 0 0 12px var(--bg-color); position: relative;">
-                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 140px; height: 140px; border-radius: 50%; background: var(--card-bg); box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: flex; flex-direction: column; align-items: center; justify-content: center;">
-                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary);">₹${total.toLocaleString('en-IN')}</div>
-                        <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem;">Total</div>
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(140px, 40%); height: min(140px, 40%); border-radius: 50%; background: var(--card-bg); box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                        <div style="font-size: clamp(1rem, 4vw, 1.5rem); font-weight: 700; color: var(--text-primary); text-align: center; padding: 0.5rem;">₹${total.toLocaleString('en-IN')}</div>
+                        <div style="font-size: clamp(0.7rem, 2vw, 0.85rem); color: var(--text-secondary); margin-top: 0.25rem;">Total</div>
                     </div>
                 </div>
             </div>
-            <div style="width: 100%; max-width: 600px; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 0.75rem;">
+            <div style="width: 100%; max-width: 600px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr)); gap: 0.75rem;">
     `;
     
     sortedCategories.forEach(([category, amount], index) => {
